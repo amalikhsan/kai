@@ -10,7 +10,7 @@
     @stack('styles')
 </head>
 
-<body>
+<body class="bg-light">
     <div id="app">
         @yield('content')
     </div>

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest\Store;
-use App\Http\Requests\UserRequest\Update;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UserRequest\Store;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\UserRequest\Update;
 
 class UserController extends Controller
 {
@@ -18,8 +19,14 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $query = User::whereNot('role', 'superadmin')->get();
-            return DataTables::of($query)->make();
+            if(auth()->user()->role=="superadmin"){
+                $query = User::where('role', 'admin')->get();
+            }else{
+                $query = User::whereNot('role', 'superadmin')->whereNot('role','admin')->get();
+            }
+            return DataTables::of($query)->addColumn('encrypted_id', function ($user) {
+                return Crypt::encryptString($user->id);
+            })->make();
         }
 
         return view('pages.user.index');
@@ -68,7 +75,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $item = User::findOrFail($id);
+        $idCrypt = Crypt::decryptString($id);
+        $item = User::findOrFail($idCrypt);
 
         return view('pages.user.edit',[
             'item'  =>  $item
@@ -110,7 +118,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::findOrFail($id);
+        $idCrypt = Crypt::decryptString($id);
+        $user = User::findOrFail($idCrypt);
         $user->delete();
 
         return redirect()->back()->with('toast', 'showToast("Data berhasil dihapus")');

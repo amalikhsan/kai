@@ -10,10 +10,10 @@
     @stack('styles')
 </head>
 
-<body>
+<body class="bg-light">
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
-            <div class="navbar-bg"></div>
+            <div class="navbar-bg bg-primary"></div>
 
             <nav class="navbar navbar-expand-lg main-navbar">
                 @include('includes.navbar')
@@ -28,6 +28,12 @@
                 <section class="section">
                     <div class="section-header">
                         <h1>@yield('title')</h1>
+                        <div class="section-header-breadcrumb">
+                            <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+                            @if(!Route::is('dashboard'))
+                            <div class="breadcrumb-item">@yield('title')</div>
+                            @endif
+                        </div>
                     </div>
                     <div class="section-body">
                         <h2 class="section-title">@yield('title')</h2>

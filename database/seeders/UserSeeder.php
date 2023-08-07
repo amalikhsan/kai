@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'role' => 'superadmin',
             'username' => 'superadmin',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('superadmin'),
         ]);
 
         User::factory()->create([
@@ -29,9 +29,61 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'role' => 'admin',
             'username' => 'admin',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('admin'),
         ]);
 
-        User::factory(19)->create();
+        User::factory()->create([
+            'name' => 'Pimpinan',
+            'email' => 'pimpinan@gmail.com',
+            'email_verified_at' => now(),
+            'role' => 'pimpinan',
+            'username' => 'pimpinan',
+            'password' => Hash::make('pimpinan'),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Manager',
+            'email' => 'manager@gmail.com',
+            'email_verified_at' => now(),
+            'role' => 'manager',
+            'username' => 'manager',
+            'password' => Hash::make('manager'),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Angbar',
+            'email' => 'angbar@gmail.com',
+            'email_verified_at' => now(),
+            'role' => 'angbar',
+            'username' => 'angbar',
+            'password' => Hash::make('angbar'),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Angfas',
+            'email' => 'angfas@gmail.com',
+            'email_verified_at' => now(),
+            'role' => 'angfas',
+            'username' => 'angfas',
+            'password' => Hash::make('angfas'),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Aset',
+            'email' => 'aset@gmail.com',
+            'email_verified_at' => now(),
+            'role' => 'aset',
+            'username' => 'aset',
+            'password' => Hash::make('aset'),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Amalkoding',
+            'email' => 'amalkoding@gmail.com',
+            'email_verified_at' => now(),
+            'role' => 'admin',
+            'username' => 'amalkoding',
+            'password' => Hash::make('amalkoding'),
+        ]);
     }
 }

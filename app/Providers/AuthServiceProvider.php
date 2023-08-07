@@ -12,7 +12,11 @@ class AuthServiceProvider extends ServiceProvider
 {
     private static $permissions = [
         'admin' => ['admin'],
-        'user' => ['user'],
+        'pimpinan'=>['pimpinan'],
+        'manager' => ['manager'],
+        'angbar' => ['angbar'],
+        'angfas' => ['angfas'],
+        'aset' => ['aset']
     ];
 
     /**

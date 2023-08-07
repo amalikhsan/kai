@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DataAsetController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataAngbarController;
+use App\Http\Controllers\DataAngfasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +22,10 @@ Route::get('/', function () {
     return view('pages.auth.login');
 })->middleware(['guest']);
 
+Route::get('/register', function () {
+    return view('pages.auth.login');
+});
+
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
@@ -27,5 +34,24 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     Route::middleware(['can:admin'])->group(function() {
         Route::resource('user', UserController::class);
+    });
+    Route::middleware(['can:pimpinan'])->group(function () {
+        Route::resource('dataAngbar', DataAngbarController::class);
+        Route::resource('dataAngfas', DataAngfasController::class);
+        Route::resource('dataAset', DataAsetController::class);
+    });
+    Route::middleware(['can:manager'])->group(function () {
+        Route::resource('dataAngbar', DataAngbarController::class);
+        Route::resource('dataAngfas', DataAngfasController::class);
+        Route::resource('dataAset', DataAsetController::class);
+    });
+    Route::middleware(['can:angbar'])->group(function () {
+        Route::resource('dataAngbar', DataAngbarController::class);
+    });
+    Route::middleware(['can:angfas'])->group(function () {
+        Route::resource('dataAngfas', DataAngfasController::class);
+    });
+    Route::middleware(['can:aset'])->group(function () {
+        Route::resource('dataAset', DataAsetController::class);
     });
 });
